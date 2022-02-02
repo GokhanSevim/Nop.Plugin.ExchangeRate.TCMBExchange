@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Exchange rate providers",
+  "FriendlyName": "T.C.M.B. Döviz Kurları Servisi",
+  "SystemName": "CurrencyExchange.TCMBExchange",
+  "Version": "1.10",
+  "SupportedVersions": [ "4.30" ],
+  "Author": "Silver Bilgi Teknolojileri",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.ExchangeRate.TCMBExchange.dll",
+  "Description": "Bu eklenti, T.C.M.B.'dan (Türkiye Cumhuriyeti Merkez Bankası) döviz kurlarının otomatik veya manuel olarak çekilmesini sağlar."
+}

@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = Nop.Plugin.ExchangeRate.TCMBExchange
+build_property.ProjectDir = C:\Users\mail\source\repos\nopCommerce_4.30_Source\Plugins\Nop.Plugin.ExchangeRate.TCMBExchange\

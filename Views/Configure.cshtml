@@ -1,0 +1,282 @@
+﻿@model Nop.Plugin.ExchangeRate.TCMBExchange.Models.ConfigurationModel
+
+@{ Layout = "_ConfigurePlugin";
+
+    Html.AddCssFileParts(ResourceLocation.Head, "~/Plugins/ExchangeRate.TCMBExchange/Content/switches.min.css"); }
+
+<form asp-controller="TCMBExchange" id="TCMBExchange" asp-action="Configure" method="post" autocomplete="off">
+    <div class="panel-group">
+        <div class="panel panel-info">
+            
+                <div class="alert alert-info" role="alert">
+                    @T("Plugins.ExchangeRate.TCMBExchange.Info")
+            
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <div class="label-wrapper">
+                            <label class="col-form-label">@T("Plugins.ExchangeRate.TCMBExchange.Fields.ActiveSelected")</label>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-row align-items-left">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsUSD" id="IsUSD" checked="@Model.IsUSD" value="true">
+                                    <label for="IsUSD">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.USD")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsAUD" id="IsAUD" checked="@Model.IsAUD" value="true">
+                                    <label for="IsAUD">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.AUD")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsDKK" id="IsDKK" checked="@Model.IsDKK" value="true">
+                                    <label for="IsDKK">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.DKK")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsEUR" id="IsEUR" checked="@Model.IsEUR" value="true">
+                                    <label for="IsEUR">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.EUR")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsGBP" id="IsGBP" checked="@Model.IsGBP" value="true">
+                                    <label for="IsGBP">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.GBP")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsCHF" id="IsCHF" checked="@Model.IsCHF" value="true">
+                                    <label for="IsCHF">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.CHF")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsSEK" id="IsSEK" checked="@Model.IsSEK" value="true">
+                                    <label for="IsSEK">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.SEK")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsCAD" id="IsCAD" checked="@Model.IsCAD" value="true">
+                                    <label for="IsCAD">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.CAD")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsKWD" id="IsKWD" checked="@Model.IsKWD" value="true">
+                                    <label for="IsKWD">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.KWD")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsNOK" id="IsNOK" checked="@Model.IsNOK" value="true">
+                                    <label for="IsNOK">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.NOK")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsSAR" id="IsSAR" checked="@Model.IsSAR" value="true">
+                                    <label for="IsSAR">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.SAR")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsJPY" id="IsJPY" checked="@Model.IsJPY" value="true">
+                                    <label for="IsJPY">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.JPY")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsBGN" id="IsBGN" checked="@Model.IsBGN" value="true">
+                                    <label for="IsBGN">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.BGN")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsRON" id="IsRON" checked="@Model.IsRON" value="true">
+                                    <label for="IsRON">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.RON")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsRUB" id="IsRUB" checked="@Model.IsRUB" value="true">
+                                    <label for="IsRUB">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.RUB")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsIRR" id="IsIRR" checked="@Model.IsIRR" value="true">
+                                    <label for="IsIRR">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.IRR")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsCNY" id="IsCNY" checked="@Model.IsCNY" value="true">
+                                    <label for="IsCNY">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.CNY")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsPKR" id="IsPKR" checked="@Model.IsPKR" value="true">
+                                    <label for="IsPKR">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.PKR")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsQAR" id="IsQAR" checked="@Model.IsQAR" value="true">
+                                    <label for="IsQAR">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.QAR")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsKRW" id="IsKRW" checked="@Model.IsKRW" value="true">
+                                    <label for="IsKRW">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.KRW")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsAZN" id="IsAZN" checked="@Model.IsAZN" value="true">
+                                    <label for="IsAZN">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.AZN")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 my-2">
+                                <div class="switches">
+                                    <input type="checkbox" name="IsAED" id="IsAED" checked="@Model.IsAED" value="true">
+                                    <label for="IsAED">
+                                        <span></span>
+                                        @T("Plugins.Exchangerate.TCMBExchange.Fields.AED")
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="AdditionalFee" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="AdditionalFee" />
+                        <span asp-validation-for="AdditionalFee"></span>
+                        <label id="CalculateAdditionalFee">&nbsp; Örnek: $100,00 + %<span>0</span> = <span>$100,00</span></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-label asp-for="TCMBExchangeApi" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="TCMBExchangeApi" />
+                        <span asp-validation-for="TCMBExchangeApi"></span>
+                    </div>
+                </div>
+                <div class="form-group row mt-5">
+                    <div class="col-md-9 offset-md-3">
+                        <input type="submit" name="save" class="btn btn-primary" value="@T("Admin.Common.Save")" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        CalculateAdditionalFee();
+
+        $('.k-select').click(function () {
+            CalculateAdditionalFee();
+        });
+
+        $('#AdditionalFee').keyup(function () {
+            CalculateAdditionalFee();
+        });
+
+        function CalculateAdditionalFee() {
+
+            var $AdditionalFee = $('#AdditionalFee').val().replace(',', '.');
+
+            var $Total = (100 + ((100 * $AdditionalFee) / 100)).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            });
+
+            $('#CalculateAdditionalFee span:eq(0)').text($AdditionalFee);
+            $('#CalculateAdditionalFee span:eq(1)').text($Total);
+
+        }
+    });
+</script>
