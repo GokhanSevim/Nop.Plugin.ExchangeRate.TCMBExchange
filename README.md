@@ -13,6 +13,9 @@ T.C.M.B. (Türkiye Cumhuriyeti Merkez Bankası) döviz kurlarının nopCommerce 
 | 4.40 | `v4.40` |
 | 4.50 | `v4.50` |
 | 4.60 | `v4.60` |
+| 4.70 | `v4.70` |
+| 4.80 | `v4.80` |
+| 4.90 | `v4.90` |
 
 Kullandığınız nopCommerce sürümüne uygun branch'i indirin/klonlayın; her branch o sürüme özel, kendi başına derlenebilir tam kaynak kodu içerir.
 
