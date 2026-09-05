@@ -20,7 +20,6 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly ISettingService _settingService;
         private readonly TCMBExchangeSettings _tcmbExchagneSettings;
-        private readonly IPermissionService _permissionService;
         private readonly INotificationService _notificationService;
 
         #endregion
@@ -30,13 +29,11 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange.Controllers
         public TCMBExchangeController(ILocalizationService localizationService,
             ISettingService settingService,
             TCMBExchangeSettings tcmbExchangeSettings,
-            IPermissionService permissionService,
             INotificationService notificationService)
         {
             _localizationService = localizationService;
             _settingService = settingService;
             _tcmbExchagneSettings = tcmbExchangeSettings;
-            _permissionService = permissionService;
             _notificationService = notificationService;
         }
 
@@ -44,11 +41,9 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange.Controllers
 
         #region Methods
 
+        [CheckPermission(StandardPermission.Configuration.MANAGE_CURRENCIES)]
         public async Task<IActionResult> Configure()
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCurrencies))
-                return AccessDeniedView();
-
             var model = new ConfigurationModel
             {
                 TCMBExchangeApi = _tcmbExchagneSettings.ApiKey,
@@ -81,11 +76,9 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange.Controllers
         }
 
         [HttpPost]
+        [CheckPermission(StandardPermission.Configuration.MANAGE_CURRENCIES)]
         public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCurrencies))
-                return AccessDeniedView();
-
             _tcmbExchagneSettings.ApiKey = model.TCMBExchangeApi;
             _tcmbExchagneSettings.AdditionalFee = model.AdditionalFee;
             _tcmbExchagneSettings.IsUSD = model.IsUSD;
