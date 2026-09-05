@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Content/switches.css",
+    "inputFile": "Content/switches.less"
+  },
+  {
+    "outputFile": "Content/tcmbexchange.css",
+    "inputFile": "Content/tcmbexchange.less"
+  }
+]
