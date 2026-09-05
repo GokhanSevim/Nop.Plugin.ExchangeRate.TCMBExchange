@@ -3,7 +3,7 @@
   "FriendlyName": "T.C.M.B. Döviz Kurları Servisi",
   "SystemName": "CurrencyExchange.TCMBExchange",
   "Version": "1.10",
-  "SupportedVersions": [ "4.80" ],
+  "SupportedVersions": [ "4.90" ],
   "Author": "Silver Bilgi Teknolojileri",
   "DisplayOrder": 1,
   "FileName": "Nop.Plugin.ExchangeRate.TCMBExchange.dll",
