@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Copyright>Copyright © Silver Bilgi Teknolojileri, Ltd</Copyright>
     <Company>Silver Bilgi Teknoloji, Ltd</Company>
     <Authors>Silver Bilgi Teknoloji, Ltd</Authors>
-    <PackageLicenseUrl>https://github.com/GokhanSevim/Nop.Plugin.ExchangeRate.TCMBExchange/blob/main/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/GokhanSevim/Nop.Plugin.ExchangeRate.TCMBExchange-v4.5x/blob/main/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://www.nopcommerce.com/tr/tc-merkez-bankasi-doviz-kurlari-servisi</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/GokhanSevim/Nop.Plugin.ExchangeRate.TCMBExchange</RepositoryUrl>
+    <RepositoryUrl>https://github.com/GokhanSevim/Nop.Plugin.ExchangeRate.TCMBExchange-v4.5x</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <OutputPath>..\..\Presentation\Nop.Web\Plugins\ExchangeRate.TCMBExchange</OutputPath>
     <OutDir>$(OutputPath)</OutDir>
