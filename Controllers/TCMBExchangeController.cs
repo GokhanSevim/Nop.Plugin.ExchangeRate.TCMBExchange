@@ -12,7 +12,7 @@ using Nop.Web.Framework.Mvc.Filters;
 namespace Nop.Plugin.ExchangeRate.TCMBExchange.Controllers
 {
     [AuthorizeAdmin]
-    [Area(AreaNames.Admin)]
+    [Area(AreaNames.ADMIN)]
     public class TCMBExchangeController : BasePluginController
     {
         #region Fields

@@ -286,7 +286,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
                             });
                         }
 
-                        if (decimal.TryParse(currency.CAD, NumberStyles.Currency, CultureInfo.InvariantCulture, out var currencyRateCAD))
+                        if (_exchangeSettings.IsCAD && decimal.TryParse(currency.CAD, NumberStyles.Currency, CultureInfo.InvariantCulture, out var currencyRateCAD))
                         {
                             ratesToTRY.Add(new Core.Domain.Directory.ExchangeRate()
                             {
@@ -326,7 +326,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
                             });
                         }
 
-                        if (decimal.TryParse(currency.JPY, NumberStyles.Currency, CultureInfo.InvariantCulture, out var currencyRateJPY))
+                        if (_exchangeSettings.IsJPY && decimal.TryParse(currency.JPY, NumberStyles.Currency, CultureInfo.InvariantCulture, out var currencyRateJPY))
                         {
                             ratesToTRY.Add(new Core.Domain.Directory.ExchangeRate()
                             {
@@ -376,7 +376,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
                             });
                         }
 
-                        if (decimal.TryParse(currency.CNY, NumberStyles.Currency, CultureInfo.InvariantCulture, out var currencyRateCNY))
+                        if (_exchangeSettings.IsCNY && decimal.TryParse(currency.CNY, NumberStyles.Currency, CultureInfo.InvariantCulture, out var currencyRateCNY))
                         {
                             ratesToTRY.Add(new Core.Domain.Directory.ExchangeRate()
                             {
