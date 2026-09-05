@@ -14,7 +14,6 @@ using Nop.Services.Plugins;
 
 namespace Nop.Plugin.ExchangeRate.TCMBExchange
 {
-
     public class TCMBExchangeRateProvider : BasePlugin, IExchangeRateProvider
     {
         #region Fields
@@ -54,7 +53,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
         /// A task that represents the asynchronous operation
         /// The task result contains the exchange rates
         /// </returns>
-        public IList<Core.Domain.Directory.ExchangeRate> GetCurrencyLiveRates(string exchangeRateCurrencyCode)
+        public async Task<IList<Core.Domain.Directory.ExchangeRate>> GetCurrencyLiveRatesAsync(string exchangeRateCurrencyCode)
         {
             if (exchangeRateCurrencyCode == null)
                 throw new ArgumentNullException(nameof(exchangeRateCurrencyCode));
@@ -75,7 +74,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
             {
                 if (string.IsNullOrEmpty(_exchangeSettings.ApiKey))
                 {
-                    throw new NopException(_localizationService.GetResource("Plugins.ExchangeRate.TCMBExchange.Info"));
+                    throw new NopException(await _localizationService.GetResourceAsync("Plugins.ExchangeRate.TCMBExchange.Info"));
                 }
 
                 int calcutaleDay = 0;
@@ -91,7 +90,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
 
                 string currentDate = DateTime.Now.AddDays(calcutaleDay).ToString("dd-MM-yyyy");
 
-                List<string> Series = new List<string>();
+                List<string> Series = new();
 
                 if (_exchangeSettings.IsUSD)
                 {
@@ -209,7 +208,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
                 {
 
                     var httpClient = _httpClientFactory.CreateClient(NopHttpDefaults.DefaultHttpClient);
-                    var jsonData = httpClient.GetStringAsync($"https://evds2.tcmb.gov.tr/service/evds/series={SeriesJoin}&startDate={currentDate}&endDate={currentDate}&type=json&key={_exchangeSettings.ApiKey}").Result;
+                    var jsonData = await httpClient.GetStringAsync($"https://evds2.tcmb.gov.tr/service/evds/series={SeriesJoin}&startDate={currentDate}&endDate={currentDate}&type=json&key={_exchangeSettings.ApiKey}");
 
                     var currencyDatas = Newtonsoft.Json.JsonConvert.DeserializeObject<TCMBExchangeResponse>(jsonData);
 
@@ -442,7 +441,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
             }
             catch (Exception ex)
             {
-                _logger.Error("T.C.M.B Exchange Service : ", ex);
+                await _logger.ErrorAsync("T.C.M.B Exchange Service : ", ex);
             }
 
             //return result for the euro
@@ -464,7 +463,7 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
             var exchangeRateCurrency = ratesToTRY.FirstOrDefault(rate => rate.CurrencyCode.Equals(exchangeRateCurrencyCode, StringComparison.InvariantCultureIgnoreCase));
 
             if (exchangeRateCurrency == null)
-                throw new NopException(_localizationService.GetResource("Plugins.ExchangeRate.TCMBExchange.Error"));
+                throw new NopException(await _localizationService.GetResourceAsync("Plugins.ExchangeRate.TCMBExchange.Error"));
 
             if (_exchangeSettings.AdditionalFee > 0)
             {
@@ -495,79 +494,79 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange
         /// Install the plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public override void Install()
+        public override async Task InstallAsync()
         {
             //locales
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.ApiKey", "Api Key");
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.AdditionalFee", "İlave % Oran (Min. %0)");
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.ActiveSelected", "Döviz Seçimi");
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Error", "Varsayılan döviz kuru Türk Lirası olduğunda doğru olarak kullanılabilir.");
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Info", "https://evds2.tcmb.gov.tr/ adresinden Üyelik oluşturup Profil sayfasında yer alan Api bilgilerinizi tanımlamalısınız.");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.ApiKey", "Api Key");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.AdditionalFee", "İlave % Oran (Min. %0)");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.ActiveSelected", "Döviz Seçimi");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Error", "Varsayılan döviz kuru Türk Lirası olduğunda doğru olarak kullanılabilir.");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Info", "https://evds2.tcmb.gov.tr/ adresinden Üyelik oluşturup Profil sayfasında yer alan Api bilgilerinizi tanımlamalısınız.");
 
 
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.USD", "ABD DOLARI");
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.AUD", "AVUSTRALYA DOLARI");
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.DKK", "DANİMARKA KRONU");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.EUR", "EURO");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.GBP", "İNGİLİZ STERLİNİ");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.CHF", "İSVİÇRE FRANGI");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.SEK", "İSVEÇ KRONU");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.CAD", "KANADA DOLARI");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.KWD", "KUVEYT DİNARI");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.NOK", "NORVEÇ KRONU");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.SAR", "SUUDİ ARABİSTAN RİYALİ");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.JPY", "JAPON YENİ");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.BGN", "BULGAR LEVASI");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.RON", "RUMEN LEYİ");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.RUB", "RUS RUBLESİ");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.IRR", "İRAN RİYALİ");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.CNY", "ÇİN YUANI");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.PKR", "PAKİSTAN RUPİSİ");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.QAR", "KATAR RİYALİ");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.KRW", "GÜNEY KORE WONU");
-             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.AZN", "AZERBAYCAN YENİ MANATI");
-            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.ExchangeRate.TCMBExchange.Fields.AED", "BİRLEŞİK ARAP EMİRLİKLERİ DİRHEMİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.USD", "ABD DOLARI");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.AUD", "AVUSTRALYA DOLARI");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.DKK", "DANİMARKA KRONU");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.EUR", "EURO");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.GBP", "İNGİLİZ STERLİNİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.CHF", "İSVİÇRE FRANGI");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.SEK", "İSVEÇ KRONU");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.CAD", "KANADA DOLARI");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.KWD", "KUVEYT DİNARI");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.NOK", "NORVEÇ KRONU");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.SAR", "SUUDİ ARABİSTAN RİYALİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.JPY", "JAPON YENİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.BGN", "BULGAR LEVASI");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.RON", "RUMEN LEYİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.RUB", "RUS RUBLESİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.IRR", "İRAN RİYALİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.CNY", "ÇİN YUANI");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.PKR", "PAKİSTAN RUPİSİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.QAR", "KATAR RİYALİ");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.KRW", "GÜNEY KORE WONU");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.AZN", "AZERBAYCAN YENİ MANATI");
+            await _localizationService.AddOrUpdateLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.AED", "BİRLEŞİK ARAP EMİRLİKLERİ DİRHEMİ");
 
-            base.Install();
+            await base.InstallAsync();
         }
 
         /// <summary>
         /// Uninstall the plugin
         /// </summary>
         /// <returns>A task that represents the asynchronous operation</returns>
-        public override void Uninstall()
+        public override async Task UninstallAsync()
         {
             //locales
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.ApiKey");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.AdditionalFee");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.ActiveSelected");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Error");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Info");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.ApiKey");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.AdditionalFee");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.ActiveSelected");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Error");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Info");
 
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.USD");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.AUD");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.DKK");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.EUR");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.GBP");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.CHF");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.SEK");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.CAD");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.KWD");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.NOK");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.SAR");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.JPY");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.BGN");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.RON");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.RUB");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.IRR");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.CNY");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.PKR");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.QAR");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.KRW");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.AZN");
-             _localizationService.DeletePluginLocaleResources("Plugins.ExchangeRate.TCMBExchange.Fields.AED");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.USD");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.AUD");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.DKK");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.EUR");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.GBP");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.CHF");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.SEK");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.CAD");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.KWD");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.NOK");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.SAR");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.JPY");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.BGN");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.RON");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.RUB");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.IRR");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.CNY");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.PKR");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.QAR");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.KRW");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.AZN");
+            await _localizationService.DeleteLocaleResourceAsync("Plugins.ExchangeRate.TCMBExchange.Fields.AED");
 
-            base.Uninstall();
+            await base.UninstallAsync();
         }
 
         #endregion

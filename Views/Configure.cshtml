@@ -2,19 +2,19 @@
 
 @{ Layout = "_ConfigurePlugin";
 
-    Html.AddCssFileParts(ResourceLocation.Head, "~/Plugins/ExchangeRate.TCMBExchange/Content/switches.min.css"); }
+    Html.AddCssFileParts(ResourceLocation.Head, "~/Plugins/ExchangeRate.TCMBExchange/Content/switches.min.css");
+    
+    }
 
 <form asp-controller="TCMBExchange" id="TCMBExchange" asp-action="Configure" method="post" autocomplete="off">
-    <div class="panel-group">
-        <div class="panel panel-info">
-            
-                <div class="alert alert-info" role="alert">
-                    @T("Plugins.ExchangeRate.TCMBExchange.Info")
-            
+    <div class="cards-group">
+        <div class="card bg-info">
+            <div class="card-body">
+                @T("Plugins.ExchangeRate.TCMBExchange.Info")
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card card-default">
+            <div class="card-body">
                 <div class="form-group row">
                     <div class="col-md-3">
                         <div class="label-wrapper">

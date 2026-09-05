@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Copyright>Copyright © Silver Bilgi Teknolojileri, Ltd</Copyright>
     <Company>Silver Bilgi Teknoloji, Ltd</Company>
     <Authors>Silver Bilgi Teknoloji, Ltd</Authors>

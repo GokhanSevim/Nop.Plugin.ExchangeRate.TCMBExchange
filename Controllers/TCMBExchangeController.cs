@@ -44,9 +44,9 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange.Controllers
 
         #region Methods
 
-        public IActionResult Configure()
+        public async Task<IActionResult> Configure()
         {
-            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCurrencies))
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCurrencies))
                 return AccessDeniedView();
 
             var model = new ConfigurationModel
@@ -81,9 +81,9 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange.Controllers
         }
 
         [HttpPost]
-        public IActionResult Configure(ConfigurationModel model)
+        public async Task<IActionResult> Configure(ConfigurationModel model)
         {
-            if (!_permissionService.Authorize(StandardPermissionProvider.ManageCurrencies))
+            if (!await _permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCurrencies))
                 return AccessDeniedView();
 
             _tcmbExchagneSettings.ApiKey = model.TCMBExchangeApi;
@@ -111,9 +111,9 @@ namespace Nop.Plugin.ExchangeRate.TCMBExchange.Controllers
             _tcmbExchagneSettings.IsAZN = model.IsAZN;
             _tcmbExchagneSettings.IsAED = model.IsAED;
 
-            _settingService.SaveSetting(_tcmbExchagneSettings);
+            await _settingService.SaveSettingAsync(_tcmbExchagneSettings);
 
-            _notificationService.SuccessNotification(_localizationService.GetResource("Admin.Plugins.Saved"));
+            _notificationService.SuccessNotification(await _localizationService.GetResourceAsync("Admin.Plugins.Saved"));
 
             return RedirectToAction("Configure");
         }

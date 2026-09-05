@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Nop.Plugin.ExchangeRate.TCMBExchange.Models
 {
-    public class ConfigurationModel : BaseNopModel
+    public record ConfigurationModel : BaseNopModel
     {
 
         [NopResourceDisplayName("Plugins.ExchangeRate.TCMBExchange.Fields.ApiKey")]
